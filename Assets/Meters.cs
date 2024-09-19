@@ -2,33 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Scroller : MonoBehaviour
+public class Meters : MonoBehaviour
 {
-    public bool Scroll_UP;
+    public float Meters_Counter;
+    bool Add_Meters;
     void Start()
     {
         
     }
-
+    void Meter_Calculate()
+    {
+        Meters_Counter = transform.position.y + 4.17f;
+    }
     void Update()
     {
-        if(Scroll_UP == true)
+        Meter_Calculate();
+        if (Add_Meters == true)
         {
-            transform.Translate(0, 0.7f*Time.smoothDeltaTime*30f, 0);
+            transform.Translate(0, 0.7f * Time.smoothDeltaTime * 30f, 0);
         }
     }
     void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag == "Plant")
         {
-            Scroll_UP = true;
+            Add_Meters = true;
         }
     }
     void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.tag == "Plant")
         {
-            Scroll_UP = false;
+            Add_Meters = false;
         }
     }
 }

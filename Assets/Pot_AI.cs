@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class Pot_AI : MonoBehaviour
 {
+    public Player_AI Back_to_movement;
     public int Index;
     GameObject Plant;
     public GameObject Tall_Plant;
     public GameObject Wide_Plant;
     public int Dropped_State;
     Rigidbody2D Pot_Physics;
+    bool All_Done_Deploying;
     void Start()
     {
+        All_Done_Deploying = false;
         Pot_Physics = GetComponent<Rigidbody2D>();
         switch (Index)
         {
@@ -27,7 +30,7 @@ public class Pot_AI : MonoBehaviour
                     Destroy(Tall_Plant, 0);
                     break;
                 }
-        }
+        } 
     }
     void Update()
     {
@@ -35,9 +38,15 @@ public class Pot_AI : MonoBehaviour
         {
             case 2:
                 {
-                    Pot_Physics.constraints = RigidbodyConstraints2D.FreezeAll;
-                    Pot_Physics.isKinematic = false;
-                    Plant.SetActive(true);
+                    if (All_Done_Deploying == false)
+                    {
+                        Back_to_movement.Movement_Interrupt = false;
+                        Back_to_movement.Delayed_Interrupt = true;
+                        Pot_Physics.constraints = RigidbodyConstraints2D.FreezeAll;
+                        Pot_Physics.isKinematic = false;
+                        Plant.SetActive(true);
+                        All_Done_Deploying = true;
+                    }
                     break;
                 }
         }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2776183218882531993}
   m_Layer: 0
   m_Name: PlantVEH
-  m_TagString: Untagged
+  m_TagString: Plant
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 720020328811975335}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 2.4496, z: 0.19}
-  m_LocalScale: {x: 5.416493, y: 0.6825758, z: 0.85858}
+  m_LocalPosition: {x: 0, y: 1.2655, z: 0.19}
+  m_LocalScale: {x: 3.048402, y: 0.6825758, z: 0.85858}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4277905755028433269}
@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 3983029850333523887}
   m_Layer: 0
   m_Name: Pot
-  m_TagString: Untagged
+  m_TagString: Pot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -250,7 +250,7 @@ Rigidbody2D:
   m_Mass: 100000
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 10
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -320,7 +320,7 @@ GameObject:
   - component: {fileID: 761886041785319770}
   m_Layer: 0
   m_Name: PlantVER
-  m_TagString: Untagged
+  m_TagString: Plant
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
