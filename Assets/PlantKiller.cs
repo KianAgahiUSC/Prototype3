@@ -8,7 +8,7 @@ public class PlantKiller : MonoBehaviour
     {
         if(collision.tag == "Pot")
         {
-            Destroy(collision.gameObject);
+            collision.gameObject.GetComponent<Pot_AI>().Offscreen_Kill = true;
         }
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player_AI : MonoBehaviour
 {
+    public bool GO_UP;
     public Player_AI My_Code;
     public GameObject Pot_Spawn;
     public int Pot_Index;
@@ -13,6 +14,7 @@ public class Player_AI : MonoBehaviour
     bool OnceInvokeDelayer;
     void Start()
     {
+        GO_UP = false;
         My_Code = GetComponent<Player_AI>();
     }
     void NormControl()
@@ -57,6 +59,7 @@ public class Player_AI : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space) && Delayed_Interrupt == false)
             {
+                GO_UP = true;
                 Pot_Make();
                 Movement_Interrupt = true;
             }
