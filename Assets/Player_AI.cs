@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Player_AI : MonoBehaviour
 {
+    public int NextIndex;
+    public int NextIndexAfter;
+    public List<int> PotMaker;
     public bool GO_UP;
     public Player_AI My_Code;
     public GameObject Pot_Spawn;
@@ -11,11 +14,16 @@ public class Player_AI : MonoBehaviour
     int DIR;
     public bool Movement_Interrupt;
     public bool Delayed_Interrupt;
+    bool Once_Placed;
     bool OnceInvokeDelayer;
     void Start()
     {
         GO_UP = false;
         My_Code = GetComponent<Player_AI>();
+    }
+    void UPD_Index()
+    {
+        
     }
     void NormControl()
     {
@@ -23,30 +31,22 @@ public class Player_AI : MonoBehaviour
     }
     void Update()
     {
-        //Remove this before submission
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            DEBUG_ONLY_P_TYPE += 1;
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            DEBUG_ONLY_P_TYPE -= 1;
-        }
-        if(DEBUG_ONLY_P_TYPE > 1)
+        if(DEBUG_ONLY_P_TYPE > PotMaker.Count-1  )
         {
             DEBUG_ONLY_P_TYPE = 0;
         }
         if (DEBUG_ONLY_P_TYPE < 0)
         {
-            DEBUG_ONLY_P_TYPE = 1;
+            DEBUG_ONLY_P_TYPE = PotMaker.Count-1;
         }
         //
 
         if (Delayed_Interrupt == true)
         {
+            Once_Placed = true;
             if (OnceInvokeDelayer == false)
             {
-                Invoke("NormControl", .5f);
+                Invoke("NormControl", .25f);
                 OnceInvokeDelayer = true;
             }
         }
@@ -102,8 +102,17 @@ public class Player_AI : MonoBehaviour
     void Pot_Make()
     {
         GameObject NPot = Instantiate(Pot_Spawn,transform.position,Quaternion.identity);
+        if (Once_Placed == true)
+        {
+            DEBUG_ONLY_P_TYPE = Random.Range(0, 8);
+        }
+        else
+        {
+            DEBUG_ONLY_P_TYPE = 1;
+        }
         NPot.GetComponent<Pot_AI>().Back_to_movement = My_Code;
         Pot_Index = DEBUG_ONLY_P_TYPE;
         NPot.GetComponent<Pot_AI>().Index = Pot_Index;
+        DEBUG_ONLY_P_TYPE += 1;
     }
 }

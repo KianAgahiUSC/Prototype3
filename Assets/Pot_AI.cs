@@ -10,8 +10,14 @@ public class Pot_AI : MonoBehaviour
     public Player_AI Back_to_movement;
     public int Index;
     GameObject Plant;
-    public GameObject Tall_Plant;
-    public GameObject Wide_Plant;
+    public GameObject PT0;
+    public GameObject PT1;
+    public GameObject PT2;
+    public GameObject PT3;
+    public GameObject PT4;
+    public GameObject PT5;
+    public GameObject PT6;
+    public GameObject PT7;
     public int Dropped_State;
     Rigidbody2D Pot_Physics;
     bool All_Done_Deploying;
@@ -24,14 +30,42 @@ public class Pot_AI : MonoBehaviour
         {
             case 0:
                 {
-                    Plant = Tall_Plant;
-                    Destroy(Wide_Plant, 0);
+                    Plant = PT0;
                     break;
                 }
             case 1:
                 {
-                    Plant = Wide_Plant;
-                    Destroy(Tall_Plant, 0);
+                    Plant = PT1;
+                    break;
+                }
+            case 2:
+                {
+                    Plant = PT2;
+                    break;
+                }
+            case 3:
+                {
+                    Plant = PT3;
+                    break;
+                }
+            case 4:
+                {
+                    Plant = PT4;
+                    break;
+                }
+            case 5:
+                {
+                    Plant = PT5;
+                    break;
+                }
+            case 6:
+                {
+                    Plant = PT6;
+                    break;
+                }
+            case 7:
+                {
+                    Plant = PT7;
                     break;
                 }
         } 
