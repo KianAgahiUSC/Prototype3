@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Player_AI : MonoBehaviour
 {
+    public bool CanSpawnMore;
+    public GameObject HolderMine;
     public int NextIndex;
-    public int NextIndexAfter;
-    public List<int> PotMaker;
+    public int NextIndexNextIndex;
     public bool GO_UP;
     public Player_AI My_Code;
     public GameObject Pot_Spawn;
@@ -14,36 +15,33 @@ public class Player_AI : MonoBehaviour
     int DIR;
     public bool Movement_Interrupt;
     public bool Delayed_Interrupt;
-    bool Once_Placed;
+    public bool Once_Placed;
     bool OnceInvokeDelayer;
     void Start()
     {
         GO_UP = false;
         My_Code = GetComponent<Player_AI>();
+        NextIndex = Random.Range(0, 8);
+        NextIndexNextIndex = Random.Range(0, 8);
     }
     void UPD_Index()
     {
-        
+        Pot_Index = NextIndex;
+        NextIndex = NextIndexNextIndex;
+        NextIndexNextIndex = Random.Range(0, 8);
     }
     void NormControl()
     {
         Delayed_Interrupt = false;
     }
+    GameObject CPot;
+    public bool Make_Pot;
     void Update()
     {
-        if(DEBUG_ONLY_P_TYPE > PotMaker.Count-1  )
-        {
-            DEBUG_ONLY_P_TYPE = 0;
-        }
-        if (DEBUG_ONLY_P_TYPE < 0)
-        {
-            DEBUG_ONLY_P_TYPE = PotMaker.Count-1;
-        }
         //
 
         if (Delayed_Interrupt == true)
         {
-            Once_Placed = true;
             if (OnceInvokeDelayer == false)
             {
                 Invoke("NormControl", .25f);
@@ -57,10 +55,16 @@ public class Player_AI : MonoBehaviour
 
         if (Movement_Interrupt == false)
         {
+            if (Make_Pot == false)
+            {
+                Pot_Make();
+                Make_Pot = true;
+            }
+
             if (Input.GetKeyDown(KeyCode.Space) && Delayed_Interrupt == false)
             {
                 GO_UP = true;
-                Pot_Make();
+                Pot_Drop();
                 Movement_Interrupt = true;
             }
             Movement();
@@ -72,7 +76,7 @@ public class Player_AI : MonoBehaviour
         float Ranger = 5;
         switch(DIR)
         {
-            case 0:
+            case 0: 
                 {
                     if (transform.position.x < Ranger)
                     {
@@ -98,21 +102,29 @@ public class Player_AI : MonoBehaviour
                 }
         }
     }
-    public int DEBUG_ONLY_P_TYPE;
     void Pot_Make()
+    { 
+        if (CanSpawnMore == false)
+        {
+            GameObject NPot = Instantiate(Pot_Spawn, transform.position, Quaternion.identity);
+            CPot = NPot;
+            CPot.GetComponent<Pot_AI>().HolderPlace = HolderMine;
+            CPot.GetComponent<Pot_AI>().Back_to_movement = My_Code;
+            if (Once_Placed == false)
+            {
+                Pot_Index = 1;
+            }
+            else
+            {
+                UPD_Index();
+            }
+            CPot.GetComponent<Pot_AI>().Index = Pot_Index;
+            CanSpawnMore = true;
+        }
+    }
+    void Pot_Drop()
     {
-        GameObject NPot = Instantiate(Pot_Spawn,transform.position,Quaternion.identity);
-        if (Once_Placed == true)
-        {
-            DEBUG_ONLY_P_TYPE = Random.Range(0, 8);
-        }
-        else
-        {
-            DEBUG_ONLY_P_TYPE = 1;
-        }
-        NPot.GetComponent<Pot_AI>().Back_to_movement = My_Code;
-        Pot_Index = DEBUG_ONLY_P_TYPE;
-        NPot.GetComponent<Pot_AI>().Index = Pot_Index;
-        DEBUG_ONLY_P_TYPE += 1;
+        CPot.GetComponent<Pot_AI>().Dropped_State = 1;
+        CPot = null;
     }
 }
