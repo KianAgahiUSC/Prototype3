@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Pot_AI : MonoBehaviour
 {
+    Scroller CamScroll;
+    public Collider2D HitBox;
     public SpriteRenderer MainGraphic;
     public Sprite PTG0;
     public Sprite PTG1;
@@ -32,6 +34,8 @@ public class Pot_AI : MonoBehaviour
     bool All_Done_Deploying;
     void Start()
     {
+        CamScroll = GameObject.Find("Main Camera").GetComponent<Scroller>();
+        HitBox.enabled = false;
         Pot = this.gameObject;
         All_Done_Deploying = false;
         Pot_Physics = GetComponent<Rigidbody2D>();
@@ -103,10 +107,21 @@ public class Pot_AI : MonoBehaviour
         }
     }
     public GameObject HolderPlace;
+    bool Bad_Player;
     void Update()
     {
         if(Offscreen_Kill == true && OnceKill == false)
         {
+            if(All_Done_Deploying == false)
+            {
+                if (Bad_Player == false)
+                {
+                    CamScroll.Penalty = true;
+                    CamScroll.GetComponent<Animator>().enabled = true;
+                    CamScroll.GetComponent<Animator>().Play("ShakeDeath", 0, 0);
+                    Bad_Player = true;
+                }
+            }
             ResePlant();
             Destroy(Pot, .1f);
             OnceKill = true;
@@ -123,6 +138,7 @@ public class Pot_AI : MonoBehaviour
                     }
                 case 1:
                     {
+                        HitBox.enabled = true;
                         Pot_Physics.gravityScale = 10;
                         break;
                     }
@@ -130,6 +146,8 @@ public class Pot_AI : MonoBehaviour
                     {
                         if (All_Done_Deploying == false)
                         {
+                            Back_to_movement.lastest = Pot;
+                            HitBox.enabled = true;
                             ResePlant();
                             Pot_Physics.constraints = RigidbodyConstraints2D.FreezeAll;
                             Pot_Physics.isKinematic = false;

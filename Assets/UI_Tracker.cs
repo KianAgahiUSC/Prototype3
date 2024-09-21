@@ -9,6 +9,7 @@ public class UI_Tracker : MonoBehaviour
     public Player_AI PlayerGET;
     public Meters MTrack;
     public TextMeshProUGUI MTEX;
+    public Image Current_Graphic;
     public Image Next_Graphic;
     public Image After_Next_Graphic;
     public Sprite PTG0;
@@ -47,6 +48,11 @@ public class UI_Tracker : MonoBehaviour
             case 1:
                 {
                     Tracker = PlayerGET.NextIndexNextIndex;
+                    break;
+                }
+            case 2:
+                {
+                    Tracker = PlayerGET.Pot_Index;
                     break;
                 }
         }
@@ -109,6 +115,7 @@ public class UI_Tracker : MonoBehaviour
     {
         UPD_GRAPHIC(0, Next_Graphic);
         UPD_GRAPHIC(1, After_Next_Graphic);
+        UPD_GRAPHIC(2, Current_Graphic);
         MTEX.text = MTrack.Meters_Counter.ToString();
     }
 }

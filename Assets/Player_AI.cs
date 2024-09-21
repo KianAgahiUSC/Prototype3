@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player_AI : MonoBehaviour
 {
+    public int EndGameState;
+    public GameObject lastest;
     public bool CanSpawnMore;
     public GameObject HolderMine;
     public int NextIndex;
@@ -17,8 +19,10 @@ public class Player_AI : MonoBehaviour
     public bool Delayed_Interrupt;
     public bool Once_Placed;
     bool OnceInvokeDelayer;
+    Scroller CamScroll;
     void Start()
     {
+        CamScroll = GameObject.Find("Main Camera").GetComponent<Scroller>();
         GO_UP = false;
         My_Code = GetComponent<Player_AI>();
         NextIndex = Random.Range(0, 8);
@@ -29,6 +33,21 @@ public class Player_AI : MonoBehaviour
         Pot_Index = NextIndex;
         NextIndex = NextIndexNextIndex;
         NextIndexNextIndex = Random.Range(0, 8);
+        if(CamScroll.Final_Stretch == true)
+        {
+            if (NextIndexNextIndex == 1)
+            {
+                NextIndexNextIndex = 7;
+            }
+            if (NextIndexNextIndex == 3)
+            {
+                NextIndexNextIndex = 6;
+            }
+            if (NextIndexNextIndex == 4)
+            {
+                NextIndexNextIndex = 7;
+            }
+        }
     }
     void NormControl()
     {
@@ -51,6 +70,12 @@ public class Player_AI : MonoBehaviour
         else
         {
             OnceInvokeDelayer = false;
+        }
+
+        if(Once_Placed == true && lastest == null)
+        {
+            EndGameState = -1;
+            //Lose, lastest pot went offscreen
         }
 
         if (Movement_Interrupt == false)
