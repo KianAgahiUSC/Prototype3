@@ -106,11 +106,21 @@ public class Pot_AI : MonoBehaviour
             OnceCall = true;
         }
     }
+    public bool OPTIM;
+    bool Goner;
     public GameObject HolderPlace;
     bool Bad_Player;
     void Update()
     {
-        if(Offscreen_Kill == true && OnceKill == false)
+        if (OPTIM == true)
+        {
+            if (Goner == false)
+            {
+                Destroy(Pot, .1f);
+                Goner = true;
+            }
+        }
+            if (Offscreen_Kill == true && OnceKill == false)
         {
             if(All_Done_Deploying == false)
             {
@@ -123,7 +133,6 @@ public class Pot_AI : MonoBehaviour
                 }
             }
             ResePlant();
-            Destroy(Pot, .1f);
             OnceKill = true;
         }
         if (OnceKill == false)

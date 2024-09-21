@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player_AI : MonoBehaviour
 {
+    public float StressCountDown;
+    public bool At_Risk;
     public int EndGameState;
     public GameObject lastest;
     public bool CanSpawnMore;
@@ -22,6 +24,7 @@ public class Player_AI : MonoBehaviour
     Scroller CamScroll;
     void Start()
     {
+        StressCountDown = 5;
         CamScroll = GameObject.Find("Main Camera").GetComponent<Scroller>();
         GO_UP = false;
         My_Code = GetComponent<Player_AI>();
@@ -55,10 +58,15 @@ public class Player_AI : MonoBehaviour
     }
     GameObject CPot;
     public bool Make_Pot;
+    public bool Final_Make_GO;
+    bool OnceInvoke;
     void Update()
     {
         //
-
+        if (Final_Make_GO == true && EndGameState == 0)
+        {
+            StressCountDown -= Time.deltaTime;
+        }
         if (Delayed_Interrupt == true)
         {
             if (OnceInvokeDelayer == false)
@@ -78,21 +86,24 @@ public class Player_AI : MonoBehaviour
             //Lose, lastest pot went offscreen
         }
 
-        if (Movement_Interrupt == false)
+        if (EndGameState == 0)
         {
-            if (Make_Pot == false)
+            if (Movement_Interrupt == false)
             {
-                Pot_Make();
-                Make_Pot = true;
-            }
+                if (Make_Pot == false)
+                {
+                    Pot_Make();
+                    Make_Pot = true;
+                }
 
-            if (Input.GetKeyDown(KeyCode.Space) && Delayed_Interrupt == false)
-            {
-                GO_UP = true;
-                Pot_Drop();
-                Movement_Interrupt = true;
+                if (Input.GetKeyDown(KeyCode.Space) && Delayed_Interrupt == false)
+                {
+                    GO_UP = true;
+                    Pot_Drop();
+                    Movement_Interrupt = true;
+                }
+                Movement();
             }
-            Movement();
         }
     }
     void Movement()

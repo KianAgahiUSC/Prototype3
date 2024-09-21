@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Enemy_AI : MonoBehaviour
 {
+    public GameObject Got_Down;
+    public ParticleSystem LoopDown;
     Scroller CamScroll;
     public bool KILLED;
     public GameObject Platform;
@@ -17,12 +19,15 @@ public class Enemy_AI : MonoBehaviour
     bool DemonShift;
     void Update()
     {
+        var maina = LoopDown.emission;
         if (DemonShift == false)
         {
+            maina.rateOverTime = 0;
             Movement();
         }
         if(DemonShift == true)
         {
+            maina.rateOverTime = 5;
             CamScroll.DemonInfluence = true;
         }
         if(KILLED == true)
@@ -74,10 +79,12 @@ public class Enemy_AI : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
+        Got_Down.SetActive(true);
         DemonShift = true;
     }
     void OnCollisionExit2D(Collision2D collision)
     {
+        Got_Down.SetActive(false);
         DemonShift = false;
         CamScroll.DemonInfluence = false;
     }

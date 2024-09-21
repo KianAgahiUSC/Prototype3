@@ -6,6 +6,7 @@ using TMPro;
 
 public class UI_Tracker : MonoBehaviour
 {
+    public Animator Risker;
     public Player_AI PlayerGET;
     public Meters MTrack;
     public TextMeshProUGUI MTEX;
@@ -34,6 +35,28 @@ public class UI_Tracker : MonoBehaviour
     void Start()
     {
         
+    }
+    bool Did_Risk;
+    void RiskSHOW()
+    {
+        switch(PlayerGET.At_Risk)
+        {
+            case true:
+                {
+                    Risker.enabled = true;
+                    Risker.SetInteger("Appear", 0);
+                    Did_Risk = true;
+                    break;
+                }
+            case false:
+                {
+                    if (Did_Risk == true)
+                    {
+                        Risker.SetInteger("Appear", 1);
+                    }
+                    break;
+                }
+        }
     }
     void UPD_GRAPHIC(int Nexter, Image Target_Graphic)
     {
@@ -113,9 +136,10 @@ public class UI_Tracker : MonoBehaviour
     }
     void Update()
     {
+        RiskSHOW();
         UPD_GRAPHIC(0, Next_Graphic);
         UPD_GRAPHIC(1, After_Next_Graphic);
         UPD_GRAPHIC(2, Current_Graphic);
-        MTEX.text = MTrack.Meters_Counter.ToString();
+        MTEX.text = MTrack.Meters_Counter.ToString("0.00");
     }
 }

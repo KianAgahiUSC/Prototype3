@@ -1,9 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Scroller : MonoBehaviour
 {
+    public GameObject LastWarned;
+    public GameObject CheckPointNOTIF;
+    public TextMeshProUGUI TimerMan;
+    public Animator WarningTime;
     public Meters MTrack;
     public GameObject MoverA;
     public bool Scroll_UP;
@@ -25,6 +30,7 @@ public class Scroller : MonoBehaviour
     }
     void Update()
     {
+
         if(Penalty == true)
         {
             PenalitySPD = .2f;
@@ -43,6 +49,7 @@ public class Scroller : MonoBehaviour
 
         if (Final_Stretch == true)
         {
+            CheckPointNOTIF.SetActive(true);
             Harder_Speed = .0175f;
         }
         else
@@ -59,26 +66,48 @@ public class Scroller : MonoBehaviour
             DSpeed = 0;
         }
 
-        if (Scroll_UP == true)
+        if (MTrack.Meters_Counter >= 115 && PCode.StressCountDown > 0)
         {
-            if (MTrack.Meters_Counter < 115)
+            LastWarned.SetActive(false);
+            CheckPointNOTIF.SetActive(false);
+            PCode.EndGameState = 1;
+            //Player Wins
+        }
+        if(PCode.StressCountDown < 0)
+        {
+            LastWarned.SetActive(false);
+            CheckPointNOTIF.SetActive(false);
+            PCode.EndGameState = -1;
+        }
+        if (MoverA.transform.position.y >= 108)
+        {
+            PCode.Final_Make_GO = true;
+            WarningTime.enabled = true;
+            LastWarned.SetActive(true);
+            TimerMan.text = PCode.StressCountDown.ToString("0.00");
+        }
+
+            if (Scroll_UP == true)
+        {
+            if (PCode.EndGameState == 0)
             {
-                if (PCode.EndGameState == 0)
+                if (MoverA.transform.position.y < 108)
                 {
                     MoverA.transform.Translate(0, 0.7f * Time.smoothDeltaTime * 30f, 0);
                 }
-            }
-            else
-            {
-                PCode.EndGameState = 1;
-                //Player Wins
             }
         }
         else
         {
             if (PCode.GO_UP == true)
             {
-                MoverA.transform.Translate(0, (.01f+ DSpeed+ Harder_Speed + PenalitySPD) * Time.smoothDeltaTime * 30f, 0);
+                if (PCode.EndGameState == 0)
+                {
+                    if (MoverA.transform.position.y < 108)
+                    {
+                        MoverA.transform.Translate(0, (.01f + DSpeed + Harder_Speed + PenalitySPD) * Time.smoothDeltaTime * 30f, 0);
+                    }
+                }
             }
         }
     }
