@@ -32,6 +32,10 @@ public class Pot_AI : MonoBehaviour
     public int Dropped_State;
     Rigidbody2D Pot_Physics;
     bool All_Done_Deploying;
+
+    public AudioSource creakSound;
+    public AudioSource leafSound;
+
     void Start()
     {
         CamScroll = GameObject.Find("Main Camera").GetComponent<Scroller>();
@@ -155,6 +159,7 @@ public class Pot_AI : MonoBehaviour
                     {
                         if (All_Done_Deploying == false)
                         {
+                            ImpactSound();
                             Back_to_movement.lastest = Pot;
                             HitBox.enabled = true;
                             ResePlant();
@@ -174,5 +179,11 @@ public class Pot_AI : MonoBehaviour
         {
             Dropped_State = 2;
         }
+    }
+
+    void ImpactSound()
+    {
+        creakSound.Play();
+        leafSound.Play();
     }
 }

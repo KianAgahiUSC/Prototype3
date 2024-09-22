@@ -22,6 +22,8 @@ public class Player_AI : MonoBehaviour
     public bool Once_Placed;
     bool OnceInvokeDelayer;
     Scroller CamScroll;
+    public AudioSource bloop;
+
     void Start()
     {
         StressCountDown = 5;
@@ -100,6 +102,7 @@ public class Player_AI : MonoBehaviour
                 {
                     GO_UP = true;
                     Pot_Drop();
+                    Play_Bloop();
                     Movement_Interrupt = true;
                 }
                 Movement();
@@ -162,5 +165,10 @@ public class Player_AI : MonoBehaviour
     {
         CPot.GetComponent<Pot_AI>().Dropped_State = 1;
         CPot = null;
+    }
+
+    void Play_Bloop()
+    {
+        bloop.Play();
     }
 }

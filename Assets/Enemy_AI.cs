@@ -10,15 +10,31 @@ public class Enemy_AI : MonoBehaviour
     public bool KILLED;
     public GameObject Platform;
     bool Make_Platform;
+
+    public AudioSource evilLaugh;
+    public AudioSource flapping;
+
+    bool isFlapping;
+
     void Start()
     {
         //70 meter hike
+        isFlapping = false;
         CamScroll = GameObject.Find("Main Camera").GetComponent<Scroller>();
     }
 
     bool DemonShift;
     void Update()
     {
+        if (!isFlapping)
+        {
+            if (this.transform.position.y < 3.5)
+            {
+                flapping.Play();
+                isFlapping=true;
+            }
+        }
+
         var maina = LoopDown.emission;
         if (DemonShift == false)
         {
@@ -32,6 +48,7 @@ public class Enemy_AI : MonoBehaviour
         }
         if(KILLED == true)
         {
+            //when you place a pot on it
             if(Make_Platform == false)
             {
                 Instantiate(Platform,transform.position,transform.rotation);
@@ -81,6 +98,8 @@ public class Enemy_AI : MonoBehaviour
     {
         Got_Down.SetActive(true);
         DemonShift = true;
+        evilLaugh.Play();
+
     }
     void OnCollisionExit2D(Collision2D collision)
     {
