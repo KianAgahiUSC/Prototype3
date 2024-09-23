@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player_AI : MonoBehaviour
 {
+    public bool SpacePress;
     public float StressCountDown;
     public bool At_Risk;
     public int EndGameState;
@@ -100,6 +101,7 @@ public class Player_AI : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.Space) && Delayed_Interrupt == false)
                 {
+                    SpacePress = true;
                     GO_UP = true;
                     Pot_Drop();
                     Play_Bloop();

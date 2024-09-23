@@ -6,6 +6,10 @@ using TMPro;
 
 public class UI_Tracker : MonoBehaviour
 {
+    public GameObject CoolFlash;
+    public GameObject WIN;
+    public GameObject LOSE;
+    public GameObject StartPress;
     public GameObject Losing;
     public Animator Risker;
     public Player_AI PlayerGET;
@@ -35,7 +39,7 @@ public class UI_Tracker : MonoBehaviour
 
     void Start()
     {
-        
+        Cursor.visible = false;
     }
     bool Did_Risk;
     void RiskSHOW()
@@ -137,8 +141,38 @@ public class UI_Tracker : MonoBehaviour
         Target_Graphic.sprite = CurrentSprite;
         Target_Graphic.rectTransform.localScale = CurrentScale;
     }
+    bool WinOnce;
+    void CoolHitStop()
+    {
+        WIN.SetActive(true);
+    }
     void Update()
     {
+        
+        switch(PlayerGET.EndGameState)
+        {
+            case -1:
+                {
+                    LOSE.SetActive(true);
+                    WIN.SetActive(false);
+                    break;
+                }
+            case 1:
+                {
+                    LOSE.SetActive(false);
+                    if (WinOnce == false)
+                    {
+                        CoolFlash.SetActive(true);
+                        Invoke("CoolHitStop", 2);
+                        WinOnce = true;
+                    }
+                    break;
+                }
+        }
+        if(PlayerGET.SpacePress == true)
+        {
+            StartPress.SetActive(false);
+        }
         RiskSHOW();
         UPD_GRAPHIC(0, Next_Graphic);
         UPD_GRAPHIC(1, After_Next_Graphic);
