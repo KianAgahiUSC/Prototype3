@@ -5,6 +5,8 @@ using UnityEngine.UIElements;
 
 public class CheckPoint : MonoBehaviour
 {
+    public SpriteRenderer PlantCHECK;
+    public GameObject GLOWGO;
     Scroller CamScroll;
     public Meters PlayerME;
     Collider2D Box;
@@ -20,6 +22,8 @@ public class CheckPoint : MonoBehaviour
         {
             if (MadeIT == false)
             {
+                GLOWGO.SetActive(true);
+                PlantCHECK.color = new Vector4(1, 1, 1, 1);
                 Box.isTrigger = false;
                 CamScroll.GetComponent<Animator>().enabled = true;
                 CamScroll.GetComponent<Animator>().Play("ShakeDeath", 0, 0);

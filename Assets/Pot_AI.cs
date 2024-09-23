@@ -5,6 +5,15 @@ using UnityEngine;
 
 public class Pot_AI : MonoBehaviour
 {
+    GameObject Phantom;
+    public GameObject Phantom0;
+    public GameObject Phantom1;
+    public GameObject Phantom2;
+    public GameObject Phantom3;
+    public GameObject Phantom4;
+    public GameObject Phantom5;
+    public GameObject Phantom6;
+    public GameObject Phantom7;
     Scroller CamScroll;
     public Collider2D HitBox;
     public SpriteRenderer MainGraphic;
@@ -50,48 +59,56 @@ public class Pot_AI : MonoBehaviour
                 {
                     Plant = PT0;
                     MainGraphic.sprite = PTG0;
+                    Phantom = Phantom0;
                     break;
                 }
             case 1:
                 {
                     Plant = PT1;
                     MainGraphic.sprite = PTG1;
+                    Phantom = Phantom1;
                     break;
                 }
             case 2:
                 {
                     Plant = PT2;
                     MainGraphic.sprite = PTG2;
+                    Phantom = Phantom2;
                     break;
                 }
             case 3:
                 {
                     Plant = PT3;
                     MainGraphic.sprite = PTG3;
+                    Phantom = Phantom3;
                     break;
                 }
             case 4:
                 {
                     Plant = PT4;
                     MainGraphic.sprite = PTG4;
+                    Phantom = Phantom4;
                     break;
                 }
             case 5:
                 {
                     Plant = PT5;
                     MainGraphic.sprite = PTG5;
+                    Phantom = Phantom5;
                     break;
                 }
             case 6:
                 {
                     Plant = PT6;
                     MainGraphic.sprite = PTG6;
+                    Phantom = Phantom6;
                     break;
                 }
             case 7:
                 {
                     Plant = PT7;
                     MainGraphic.sprite = PTG7;
+                    Phantom = Phantom7;
                     break;
                 }
         } 
@@ -147,16 +164,19 @@ public class Pot_AI : MonoBehaviour
                     {
                         Pot.transform.position = HolderPlace.transform.position;
                         Pot_Physics.gravityScale = 0;
+                        Phantom.SetActive(true);
                         break;
                     }
                 case 1:
                     {
+                        Phantom.SetActive(false);
                         HitBox.enabled = true;
                         Pot_Physics.gravityScale = 10;
                         break;
                     }
                 case 2:
                     {
+                        Phantom.SetActive(false);
                         if (All_Done_Deploying == false)
                         {
                             ImpactSound();
@@ -180,10 +200,14 @@ public class Pot_AI : MonoBehaviour
             Dropped_State = 2;
         }
     }
-
+    bool OnceSND;
     void ImpactSound()
     {
-        creakSound.Play();
-        leafSound.Play();
+        if (OnceSND == false)
+        { 
+       //     creakSound.Play();
+            leafSound.Play();
+            OnceSND = true;
+        }
     }
 }

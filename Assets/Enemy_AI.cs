@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Enemy_AI : MonoBehaviour
 {
+    public float FlipModel;
+    public GameObject Model;
     public GameObject Got_Down;
     public ParticleSystem LoopDown;
     Scroller CamScroll;
@@ -19,6 +21,7 @@ public class Enemy_AI : MonoBehaviour
     void Start()
     {
         //70 meter hike
+        FlipModel = 1;
         isFlapping = false;
         CamScroll = GameObject.Find("Main Camera").GetComponent<Scroller>();
     }
@@ -66,12 +69,14 @@ public class Enemy_AI : MonoBehaviour
     {
         float spd = .175f;
         float Ranger = 5;
+        Model.transform.localScale = new Vector3(0.6939798f* FlipModel, 0.6939798f, 0.6939798f);
         switch (DIR)
         {
             case 0:
                 {
                     if (transform.position.x < Ranger)
                     {
+                        FlipModel = 1;
                         transform.Translate(spd * Time.smoothDeltaTime * 30f, 0, 0);
                     }
                     else
@@ -84,6 +89,7 @@ public class Enemy_AI : MonoBehaviour
                 {
                     if (transform.position.x > -Ranger)
                     {
+                        FlipModel = -1;
                         transform.Translate(-spd * Time.smoothDeltaTime * 30f, 0, 0);
                     }
                     else

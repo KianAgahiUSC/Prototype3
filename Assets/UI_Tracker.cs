@@ -6,6 +6,7 @@ using TMPro;
 
 public class UI_Tracker : MonoBehaviour
 {
+    public GameObject Losing;
     public Animator Risker;
     public Player_AI PlayerGET;
     public Meters MTrack;
@@ -43,6 +44,7 @@ public class UI_Tracker : MonoBehaviour
         {
             case true:
                 {
+                    Losing.SetActive(true);
                     Risker.enabled = true;
                     Risker.SetInteger("Appear", 0);
                     Did_Risk = true;
@@ -50,6 +52,7 @@ public class UI_Tracker : MonoBehaviour
                 }
             case false:
                 {
+                    Losing.SetActive(false);
                     if (Did_Risk == true)
                     {
                         Risker.SetInteger("Appear", 1);
@@ -139,7 +142,6 @@ public class UI_Tracker : MonoBehaviour
         RiskSHOW();
         UPD_GRAPHIC(0, Next_Graphic);
         UPD_GRAPHIC(1, After_Next_Graphic);
-        UPD_GRAPHIC(2, Current_Graphic);
         MTEX.text = MTrack.Meters_Counter.ToString("0.00");
     }
 }
