@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class TitleCode : MonoBehaviour
 {
+    public GameObject MusicMan;
     public GameObject SpaceUI;
     public GameObject FDSP;
     void Start()
@@ -18,10 +19,15 @@ public class TitleCode : MonoBehaviour
     bool Load_Once;
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             FDSP.SetActive(true);
             SpaceUI.SetActive(false);
+            MusicMan.SetActive(false);
             GO_GAME = true;
         }
         if(GO_GAME == true)

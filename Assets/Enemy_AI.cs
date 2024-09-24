@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy_AI : MonoBehaviour
 {
+    public GameObject Puller;
     public float FlipModel;
     public GameObject Model;
     public GameObject Got_Down;
@@ -15,11 +16,12 @@ public class Enemy_AI : MonoBehaviour
 
     public AudioSource evilLaugh;
     public AudioSource flapping;
-
+    Player_AI player;
     bool isFlapping;
 
     void Start()
     {
+        player = GameObject.Find("Player").GetComponent<Player_AI>();
         //70 meter hike
         FlipModel = 1;
         isFlapping = false;
@@ -41,11 +43,20 @@ public class Enemy_AI : MonoBehaviour
         var maina = LoopDown.emission;
         if (DemonShift == false)
         {
+            Puller.SetActive(false);
             maina.rateOverTime = 0;
             Movement();
         }
         if(DemonShift == true)
         {
+            if (player.Final_Make_GO == false)
+            {
+                Puller.SetActive(true);
+            }
+            else
+            {
+                Puller.SetActive(false);
+            }
             maina.rateOverTime = 5;
             CamScroll.DemonInfluence = true;
         }

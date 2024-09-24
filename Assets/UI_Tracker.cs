@@ -6,6 +6,7 @@ using TMPro;
 
 public class UI_Tracker : MonoBehaviour
 {
+    public GameObject MusicMain;
     public GameObject CoolFlash;
     public GameObject WIN;
     public GameObject LOSE;
@@ -142,13 +143,17 @@ public class UI_Tracker : MonoBehaviour
         Target_Graphic.rectTransform.localScale = CurrentScale;
     }
     bool WinOnce;
+    bool Oncer;
     void CoolHitStop()
     {
         WIN.SetActive(true);
     }
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
         switch(PlayerGET.EndGameState)
         {
             case -1:
@@ -171,7 +176,12 @@ public class UI_Tracker : MonoBehaviour
         }
         if(PlayerGET.SpacePress == true)
         {
-            StartPress.SetActive(false);
+            if (Oncer == false)
+            {
+                StartPress.SetActive(false);
+                MusicMain.SetActive(true);
+                Oncer = true;
+            }
         }
         RiskSHOW();
         UPD_GRAPHIC(0, Next_Graphic);

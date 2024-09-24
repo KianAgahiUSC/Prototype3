@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class Scroller : MonoBehaviour
 {
+    public GameObject PunishUI;
+    public GameObject MusicMan;
+    public GameObject PanicMan;
     public GameObject LastWarned;
     public GameObject CheckPointNOTIF;
     public TextMeshProUGUI TimerMan;
@@ -24,10 +27,12 @@ public class Scroller : MonoBehaviour
     {
         
     }
+    public GameObject PunishSND;
     void Normal()
     {
         Penalty = false;
     }
+    bool Oncer;
     void Update()
     {
 
@@ -36,12 +41,16 @@ public class Scroller : MonoBehaviour
             PenalitySPD = .2f;
             if (Invoke_ONCE == false)
             {
+                PunishUI.SetActive(true);
+                PunishSND.SetActive(true);
                 Invoke("Normal", .25f);
                 Invoke_ONCE = true;
             }
         }
         else
         {
+            PunishUI.SetActive(false);
+            PunishSND.SetActive(false);
             PenalitySPD = 0;
             Invoke_ONCE = false;
         }
@@ -65,6 +74,11 @@ public class Scroller : MonoBehaviour
         {
             DSpeed = 0;
         }
+        if(PCode.EndGameState != 0)
+        {
+            MusicMan.SetActive(false);
+            PanicMan.SetActive(false);
+        }
 
         if (MTrack.Meters_Counter >= 115 && PCode.StressCountDown > 0)
         {
@@ -81,9 +95,15 @@ public class Scroller : MonoBehaviour
         }
         if (MoverA.transform.position.y >= 108)
         {
+            if (Oncer == false)
+            {
+                LastWarned.SetActive(true);
+                MusicMan.SetActive(false);
+                PanicMan.SetActive(true);
+                Oncer = true;
+            }
             PCode.Final_Make_GO = true;
             WarningTime.enabled = true;
-            LastWarned.SetActive(true);
             TimerMan.text = PCode.StressCountDown.ToString("0.00");
         }
 

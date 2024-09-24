@@ -33,6 +33,20 @@ public class PlantKiller : MonoBehaviour
                 }
         }
      }
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        switch (Type)
+        {
+            case 1:
+                {
+                    if (collision.tag == "Pot" && collision.gameObject == Risker.lastest)
+                    {
+                        Risker.At_Risk = false;
+                    }
+                    break;
+                }
+        }
+    }
     void OnTriggerEnter2D(Collider2D collision)
     {
         switch(Type)
